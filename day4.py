@@ -28,16 +28,6 @@ def check_elf1_in_elf2(elf1,elf2):
             return True
     return False
 
-def check_elf2_in_elf1(elf1,elf2):
-    '''
-    For Part 1, check if elf2 assignment completely encompassed by elf1
-    if so return True
-    '''
-    if elf2[0] >= elf1[0]:
-        if elf2[1] <= elf1[1]:
-            return True
-    return False
-
 def check_if_any_overlap(elf1, elf2):
     '''
     For Part 2, check if there is any overlap in assignments
@@ -68,7 +58,7 @@ for line in lines:
     elf1, elf2 = get_elf_assignments(line)
     if check_elf1_in_elf2(elf1,elf2):
         overlaps += 1
-    elif check_elf2_in_elf1(elf1,elf2):
+    elif check_elf1_in_elf2(elf2,elf1):
         overlaps += 1
 
 print(f"The number of overlaps is {overlaps}.")
