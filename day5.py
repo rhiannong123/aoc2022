@@ -55,19 +55,38 @@ print(f"The top crates are {''.join(top_crates)}.")
 
 
 ## PART 2
+# Input
+# 2 sections of input, separated by new line
+#  1. initial crate set up
+#  2. instructions on moving creates
+separation_line_idx = [idx for idx in range(len(lines)) if lines[idx] == ''][0]
+stacks_line = lines[separation_line_idx - 1]
+stack_height = separation_line_idx - 1
+
+levels = [] 
+for line in reversed(lines[:stack_height]): 
+    level = line.replace('    ',' x  ').replace('[','').replace(']','').replace(' ','') 
+    levels.append(level)
+stack_count = len(level)
+    
+flattened = [level[level_idx] for level_idx in range(stack_count) for level in levels]
+
+idx = 0
+stacks = []
+for i in range(stack_count):
+    istack_str = ''.join(flattened[idx:idx+stack_height]).replace('x','') 
+    stacks.append(list(istack_str))      
+    idx += stack_height
+
 for quantity,source,dest in zip(quantities,sources,destinations):
-    print()
-    print(quantity, source, dest)
     # crates = crates to move
     crates = []
     for iquant in range(quantity): 
         if stacks[source] != []: 
             crates.append(stacks[source].pop())
-    print(crates)
     if crates != []:
         for icrate in reversed(crates):
             stacks[dest].append(icrate)
-    print(stacks)
             
 top_crates = [istack[-1] for istack in stacks]
             
